@@ -61,8 +61,8 @@
 
       <nav id="navbar" class="navbar">
         <ul>
-          <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
-          <li><a class="nav-link scrollto" href="#about">About</a></li>
+          <li><a class="nav-link scrollto" href="{{url_for('home_page')}}">Home</a></li>
+          <li><a class="nav-link scrollto" href="">About</a></li>
           <li><a class="nav-link scrollto" href="#services">Blood Bank</a></li>
           <li><a class="nav-link scrollto" href="#portfolio">Doner</a></li>
           <li><a class="nav-link scrollto" href="#team">Recipient</a></li>
@@ -70,7 +70,7 @@
           
           <li><a href="#">Login</a></li>
           
-          <li><a class="nav-link scrollto" href="#">Register</a></li>
+          <li><a class="nav-link scrollto" href="{{url_for('register_page')}}">Register</a></li>
           
 
           <li><a class="getstarted scrollto" href="#about">Get Started</a></li>

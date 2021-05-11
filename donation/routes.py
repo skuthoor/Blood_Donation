@@ -1,8 +1,8 @@
 from donation import app
 from flask import render_template, url_for #,redirect,url_for,flash, request
-#from market.models import item,user
+from donation.models import user
 from donation.forms import registerform #, loginform, PurchaseItemForm, SellItemForm
-#from donation import db
+from donation import db
 #from flask_login import login_user, logout_user,login_required, current_user
 
 
@@ -22,4 +22,4 @@ def register_page():
 def login_page():
 	form = loginform()
 	return render_template('login.html',form=form)
-	''
+	'''
