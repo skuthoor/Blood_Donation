@@ -66,11 +66,33 @@
           <li><a class="nav-link scrollto" href="#services">Blood Bank</a></li>
           <li><a class="nav-link scrollto" href="#portfolio">Doner</a></li>
           <li><a class="nav-link scrollto" href="#team">Recipient</a></li>
+
+
+          
+
+          {% if current_user.is_authenticated %}
+            <ul class="navbar">
+                <li class="nav-item">
+                    <a class="nav-link scrollto">Welcome, {{ current_user.username }}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link scrollto" href="{{ url_for('logout_page') }}">Logout</a>
+                </li>
+            </ul>
+          {% else %}
+            <ul class="navbar">
+                <li class="nav-item">
+                    <a class="nav-link scrollto" href="{{ url_for('login_page') }}">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link scrollto" href="{{ url_for('register_page') }}">Register</a>
+                </li>
+            </ul>
+          {% endif %}
+
           
           
-          <li><a href="#">Login</a></li>
-          
-          <li><a class="nav-link scrollto" href="{{url_for('register_page')}}">Register</a></li>
+
           
 
           <li><a class="getstarted scrollto" href="#about">Get Started</a></li>
@@ -82,6 +104,23 @@
   </header><!-- End Header -->
 
   <!-- ======= Hero Section ======= -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+      <br>
+      <br>
+      <br>
+      <div class="alert alert-{{ category }}">
+        <button type="button" class="close" data-dismiss="alert alert-{{ category }}" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+
+        </button>
+        {{ message }}
+      </div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+
 
   {% block content %}
 
