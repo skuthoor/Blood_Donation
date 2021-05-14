@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block title%}
+  
+  Blood Bank
+
+{% endblock %}
+
+{% block content_title%}
+  
+  Blood Bank
+
+{% endblock %}
+
+
+{% block content%}
+	<body class="text-center">
+		<br>
+		<br>
+		<br>
+		<div class="container">
+        	<form method="POST" class="form-signin" style="color:black">
+            	
+            	<img class="mb-4" src="{{url_for('static',filename='assets/img/login_icon.jpeg')}}" alt="">
+            	<h1 class="h3 mb-3 font-weight-normal">
+                Blood Bank
+            	</h1>
+            	<br>
+	            <div class="form-group">
+	            	<label for="email">district</label>
+	                {{ form.district(class="form-control")}}
+	            </div>
+	                
+	            <div class="form-group1">
+	            	<label for="email">name</label>
+	            	{{ form.name(class="form-control", id="name")}}
+	            </div>
+
+
+            	<br>
+
+
+
+
+            	{{ form.submit(class="btn btn-lg btn-block btn-primary") }} 
+
+        	</form>
+
+    	</div>
+
+    	<script>
+        	district_select = document.getElementById('district')
+        	bloodbank_select = document.getElementById('name')
+        	
+        	district_select.onchange= function() {
+        		district = district_select.value;
+
+        		fetch('blood_bank/' + district).then(function(response){
+        			response.json().then(function(data){
+
+        			
+        				
+        				optionHTML ='';
+        				for (bloodbank of data.bb){
+        					// console.log(bloodbank)
+        					// console.log('heloo')
+
+        					optionHTML += '<option value="' + bloodbank.id +'">' + bloodbank.name + '</option>'
+        					console.log(optionHTML)
+        				}
+
+        				bloodbank_select.innerHTML = optionHTML;
+        			});
+        		});
+        	}	
+
+        		
+        </script> 
+	</body>	
+
+
+{% endblock %}
