@@ -14,51 +14,57 @@
 
 {% block content%}
 
-	<body class="text-center">
-		<br>
-		<br>
-		<br>
-		<br>
-	    <div class="container">
-	        <form method="POST" class="form-register" style="color:black">
-	        	{{form.hidden_tag()}}  <!-- protect from hackers -->
-	            <img class="mb-4" src="{{url_for('static',filename='assets/img/register_icon.jpeg')}} " alt="">
-	            <h1 class="h3 mb-3 font-weight-normal">
-	                Please Create your Account
-	            </h1>
-	            <br>
-	            {{ form.username.label() }}
-	            {{ form.username(class="form-control", placeholder=" Name") }}
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 
-	            {{ form.email_address.label() }}
-	            {{ form.email_address(class="form-control", placeholder="Email Address") }}
+    <div class="container" data-aos="fade-up">
 
-	            {{ form.blood_grp.label()}}
-	            {{ form.blood_grp(class="form-control", placeholder="Blood Group")}}
+        <header class="section-header">
+          <h2></h2>
+          <p>Registration</p>    
+        </header>
 
-	            {{ form.mobile_no.label()}}
-	            {{ form.mobile_no(class="form-control", placeholder="Mobile Number")}}
+        <div class="row">
 
-	            {{ form.district.label()}}
-	            {{ form.district(class="form-control", placeholder="District")}}
+          <div class="col-lg-4 mt-4 mt-lg-0">
+            <div class="box" data-aos="fade-up" data-aos-delay="400">
+              <img src="{{url_for('static',filename='assets/img/donor_reg.png')}}" class="img-fluid" alt="">
+              <div class="text-center">
+              	<h3>Doner Registration</h3>
+              	<a class="btn btn-primary" href="{{ url_for('register_user_page') }}">Register</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 mt-4 mt-lg-0">
+            <div class="box" data-aos="fade-up" data-aos-delay="400">
+              <img src="{{url_for('static',filename='assets/img/bloodbank_reg.png')}}" class="img-fluid" alt="">
+              <div class="text-center">
+              	<h3>Blood Bank Registration</h3>
+              	<a class="btn btn-primary" href="{{ url_for('register_bank_page') }}">Register</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 mt-4 mt-lg-0">
+            <div class="box" data-aos="fade-up" data-aos-delay="600">
+              <img src="{{url_for('static',filename='assets/img/doctor_reg.png')}}" class="img-fluid" alt="">
+              <div class="text-center">
+              
+              	<h3>Doctor Registration</h3>
+              	<a class="btn btn-primary" href="{{ url_for('home_page') }}">Register</a>
+              </div>
+            
+            </div>
+          </div>
+
+        </div>
+
+    </div>
 
 
-
-	            {{ form.password1.label() }}
-	            {{ form.password1(class="form-control", placeholder="Password") }}
-
-	            {{ form.password2.label() }}
-	            {{ form.password2(class="form-control", placeholder="Confirm Password") }}
-
-	            <br>
-
-
-            	<div class="checkbox mb-3">
-               		<h6>Already have an account?</h6>
-               		<a class="btn btn-sm btn-secondary" href="{{ url_for('login_page') }}">Login</a>
-            	</div>
-
-            	{{ form.submit(class="btn btn-lg btn-block btn-primary") }}
-
-	
 {% endblock %}

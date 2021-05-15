@@ -1,7 +1,7 @@
 from donation import app
 from flask import render_template, url_for ,redirect,url_for,flash, request, jsonify, json
-from donation.models import user, category, district, govt_pvt, blood_bank
-from donation.forms import registerform , loginform, Blood_bank
+from donation.models import user, category, district, govt_pvt, blood_bank, userbank
+from donation.forms import registerform , loginform, Blood_bank, registerbankform
 from donation import db
 from flask_login import login_user, logout_user,login_required, current_user
 
@@ -12,9 +12,14 @@ from flask_login import login_user, logout_user,login_required, current_user
 def home_page():
 	return render_template('home.html')
 
-
-@app.route('/register', methods=['GET','POST'])
+@app.route('/register')
 def register_page():
+	
+	return render_template('register.html') 
+
+
+@app.route('/register/user', methods=['GET','POST'])
+def register_user_page():
 	form = registerform()
 	form.district.choices = [(district.id,district.district) for district in district.query.all()]
 	if form.validate_on_submit():
@@ -29,7 +34,40 @@ def register_page():
 			flash(f'There was an error in creating the user:{err_msg}',category='danger')
 		
 
-	return render_template('register.html',form=form)
+	return render_template('register_user.html',form=form)
+
+
+@app.route('/register/bank', methods=['GET','POST'])
+def register_bank_page():
+	form = registerbankform()
+	form.district.choices = [(district.id,district.district) for district in district.query.all()]
+	# if form.validate_on_submit():
+	# 	user_to_create = userbank(district_id=form.district.data, name_id=form.name.data, password = form.password1.data )
+	# 	db.session.add(user_to_create)
+	# 	db.session.commit()
+	# 	login_user(user_to_create)
+	# 	flash(f'Account created sucessfully! You are now logged in as: {user_to_create.name_id}')
+	# 	return redirect(url_for('home_page'))
+	# if form.errors !={}:
+	# 	for err_msg in form.error.values():
+	# 		flash(f'There was an error in creating the user:{err_msg}',category='danger')
+		
+
+
+	return render_template('register_bank.html', form= form)
+
+@app.route('/register/blood_bank/<get_district>')
+def bank(get_district):
+	bb =blood_bank.query.filter_by(district_id=get_district).all()
+	districtArray = []
+	for bloodbank in bb :
+		districtobj = {}
+		districtobj['id'] = bloodbank.id
+		districtobj['name'] = bloodbank.name
+		districtArray.append(districtobj)
+
+	return jsonify({'bb' : districtArray})
+
 
 
 @app.route('/login', methods=['GET','POST'])

@@ -26,15 +26,14 @@
                 Blood Bank
             	</h1>
             	<br>
-	            <div class="form-group">
-	            	<label for="email">district</label>
-	                {{ form.district(class="form-control")}}
-	            </div>
-	                
-	            <div class="form-group1">
-	            	<label for="email">name</label>
-	            	{{ form.name(class="form-control", id="name")}}
-	            </div>
+
+            	{{ form.district.label()}}
+	            {{ form.district(class="form-control")}}
+
+
+	            {{ form.name.label()}}
+	            {{ form.name(class="form-control", id="name")}}
+	            
 
 
             	<br>
@@ -47,13 +46,15 @@
         	</form>
 
     	</div>
+    	<script src="{{url_for('static',filename='assets/js/script.js')}}"></script>
 
-    	<script>
+<!--     	<script>
         	district_select = document.getElementById('district')
         	bloodbank_select = document.getElementById('name')
         	
         	district_select.onchange= function() {
         		district = district_select.value;
+        		console.log(district)
 
         		fetch('blood_bank/' + district).then(function(response){
         			response.json().then(function(data){
@@ -66,7 +67,7 @@
         					// console.log('heloo')
 
         					optionHTML += '<option value="' + bloodbank.id +'">' + bloodbank.name + '</option>'
-        					console.log(optionHTML)
+        					// console.log(optionHTML)
         				}
 
         				bloodbank_select.innerHTML = optionHTML;
@@ -75,7 +76,7 @@
         	}	
 
         		
-        </script> 
+        </script>  -->
 	</body>	
 
 

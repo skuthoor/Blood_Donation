@@ -52,16 +52,25 @@ class blood_bank(db.Model):
     district_id = db.Column(db.Integer(), db.ForeignKey('district.id'))
     govt_pvt_id = db.Column(db.Integer(), db.ForeignKey('govt_pvt.id'))
     category_id = db.Column(db.Integer(), db.ForeignKey('category.id'))
-    #blood_bank_id = db.relationship('blood', backref='Blood', lazy=True)
+    blood_bank_id = db.relationship('blood', backref='Blood', lazy=True)
+    #name_id = db.relationship('userbank', backref='Namebloodbank', lazy=True)
 
-'''class blood(db.model):
+class blood(db.Model):
+    id = db.Column(db.Integer(), primary_key= True)
     blood_bank_id = db.Column(db.Integer(), db.ForeignKey('blood_bank.id'))
-    A+ve = db.Column(db.Integer()) 
-    B+ve = db.Column(db.Integer()) 
-    AB+ve = db.Column(db.Integer()) 
-    O+ve = db.Column(db.Integer()) 
-    A-ve = db.Column(db.Integer()) 
-    B-ve = db.Column(db.Integer()) 
-    AB-ve = db.Column(db.Integer()) 
-    O-ve = db.Column(db.Integer()) 
-'''
+    A_positive = db.Column(db.Integer()) 
+    B_positive = db.Column(db.Integer()) 
+    AB_positive = db.Column(db.Integer()) 
+    O_positive = db.Column(db.Integer()) 
+    A_negative = db.Column(db.Integer()) 
+    B_negative = db.Column(db.Integer()) 
+    AB_negative = db.Column(db.Integer()) 
+    O_negative = db.Column(db.Integer()) 
+
+class userbank(db.Model):
+    id = db.Column(db.Integer(), primary_key= True)
+    district_id = db.Column(db.String())
+    name_id = db.Column(db.String())
+    password_hash = db.Column(db.String(length=60), nullable=False)  
+
+

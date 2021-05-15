@@ -13,7 +13,7 @@ class registerform(FlaskForm):
 	email_address = StringField(label="Email Address", validators=[Email(),DataRequired()])
 	blood_grp = SelectField(label='Blood Group',choices=['A+ve','B+ve','AB+ve','O+ve','A-ve','B-ve','AB-ve','O-ve'])
 	mobile_no =  StringField(label='Mobile Number', validators=[Length(min=4),DataRequired()])
-	district = SelectField(label='Place',choices=[]) #'Thiruvananthapuram', 'Kollam', 'Alappuzha', 'Pathanamthitta', 'Kottayam', 'Idukki', 'Ernakulam', 'Thrissur', 'Palakkad', 'Malappuram', 'Kozhikode', 'Wayanadu', 'Kannur','Kasaragod'
+	district = SelectField(label='District',choices=[]) #'Thiruvananthapuram', 'Kollam', 'Alappuzha', 'Pathanamthitta', 'Kottayam', 'Idukki', 'Ernakulam', 'Thrissur', 'Palakkad', 'Malappuram', 'Kozhikode', 'Wayanadu', 'Kannur','Kasaragod'
 	password1 = PasswordField(label='Password', validators=[Length(min=5), DataRequired()])
 	password2 = PasswordField(label='Confirm Password',validators=[EqualTo('password1'), DataRequired()])
 	submit = SubmitField('Create Account')
@@ -28,4 +28,11 @@ class Blood_bank(FlaskForm):
 	district = SelectField(label='district', choices=[])
 	name = SelectField(label='Blood_bank', choices=[])
 	submit = SubmitField('Show Details')
+
+class registerbankform(FlaskForm):
+	district = SelectField(label='District',choices=[])
+	name = SelectField(label='Blood_bank', choices=[])
+	password1 = PasswordField(label='Password', validators=[Length(min=5), DataRequired()])
+	password2 = PasswordField(label='Confirm Password',validators=[EqualTo('password1'), DataRequired()])
+	submit = SubmitField('Create Account')
 
