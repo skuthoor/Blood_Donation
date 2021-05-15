@@ -36,3 +36,23 @@ class registerbankform(FlaskForm):
 	password2 = PasswordField(label='Confirm Password',validators=[EqualTo('password1'), DataRequired()])
 	submit = SubmitField('Create Account')
 
+class registerdoctorform(FlaskForm):
+	username = StringField(label='Name', validators=[Length(min=2,max=30),DataRequired()])
+	email_address = StringField(label="Email Address", validators=[Email(),DataRequired()])
+	mobile_no =  StringField(label='Mobile Number', validators=[DataRequired()])
+	password1 = PasswordField(label='Password', validators=[Length(min=5), DataRequired()])
+	password2 = PasswordField(label='Confirm Password',validators=[EqualTo('password1'), DataRequired()])
+	submit = SubmitField('Create Account')
+
+class loginbankform(FlaskForm):
+	district = SelectField(label='District',choices=[])
+	name = SelectField(label='Blood_bank', choices=[])
+	password = PasswordField(label='Password', validators=[DataRequired()])
+	submit = SubmitField(label='Log In')
+
+class logindoctorform(FlaskForm):
+	email_address = StringField(label='Email Address', validators=[DataRequired()])
+	password = PasswordField(label='Password', validators=[DataRequired()])
+	submit = SubmitField(label='Log In')
+
+
