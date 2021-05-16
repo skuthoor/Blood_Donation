@@ -60,19 +60,8 @@ def register_bank_page():
 	form = registerbankform()
 	form.district.choices = [(district.id,district.district) for district in district.query.all()]
 	if form.validate_on_submit():
-		print('aaaaa')
-		print('aaaaa')
-		print('aaaaa')
 
-		print(form.district.data)
-		print('aaaaa')
-
-		print('aaaaa')
-
-		print('aaaaa')
-
-		print('aaaaa')
-		user_to_create = userbank(district_id=form.district.data, name_id=form.name.data, password = form.password1.data )
+		user_to_create = userbank(district_id=form.district.data, name_id=form.name.data, password=form.password1.data )
 		db.session.add(user_to_create)
 		db.session.commit()
 		#login_user(user_to_create)
@@ -142,14 +131,14 @@ def bank_login_page():
 	form = loginbankform()
 	form.district.choices = [(district.id,district.district) for district in district.query.all()]
 
-	# if form.validate_on_submit():
-	# 	attempted_user = user.query.filter_by(email_address=form.email_address.data).first()
-	# 	if attempted_user and attempted_user.check_password_correction(attempted_password=form.password.data):
-	# 		login_user(attempted_user)
-	# 		flash(f'Sucess! You are logged in as: {attempted_user.username}',category = 'success')
-	# 		return redirect(url_for('home_page'))
-	# 	else:
-	# 		flash('Username or Password is incorrect! Please try again', category= 'danger')
+	if form.validate_on_submit():
+		attempted_user = userbank.query.filter_by(name_id=form.name.data).first()
+		if attempted_user and attempted_user.check_password_correction(attempted_password=form.password.data):
+			login_user(attempted_user)
+			flash(f'Sucess! You are logged in as: {attempted_user.name_id}',category = 'success')
+			return redirect(url_for('home_page'))
+		else:
+			flash('Username or Password is incorrect! Please try again', category= 'danger')
 
 
 	return render_template('login_bank.html',form=form)

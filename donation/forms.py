@@ -31,7 +31,7 @@ class Blood_bank(FlaskForm):
 
 class registerbankform(FlaskForm):
 	district = SelectField(label='District',choices=[])
-	name = SelectField(label='Blood_bank', choices=[])
+	name = SelectField(label='Blood_bank', validate_choice=False)
 	password1 = PasswordField(label='Password', validators=[Length(min=5), DataRequired()])
 	password2 = PasswordField(label='Confirm Password',validators=[EqualTo('password1'), DataRequired()])
 	submit = SubmitField('Create Account')
@@ -46,7 +46,7 @@ class registerdoctorform(FlaskForm):
 
 class loginbankform(FlaskForm):
 	district = SelectField(label='District',choices=[])
-	name = SelectField(label='Blood_bank', choices=[])
+	name = SelectField(label='Blood_bank', validate_choice=False)
 	password = PasswordField(label='Password', validators=[DataRequired()])
 	submit = SubmitField(label='Log In')
 
