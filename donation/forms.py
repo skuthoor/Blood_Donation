@@ -26,7 +26,7 @@ class loginform(FlaskForm):
 
 class Blood_bank(FlaskForm):
 	district = SelectField(label='district', choices=[])
-	name = SelectField(label='Blood_bank', choices=[])
+	name = SelectField(label='Blood_bank', validate_choice=False)
 	submit = SubmitField('Show Details')
 
 class registerbankform(FlaskForm):

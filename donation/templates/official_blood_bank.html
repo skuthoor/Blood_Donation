@@ -1,0 +1,168 @@
+{% extends "base.html" %}
+
+{% block title%}
+  
+  Login Page
+
+{% endblock %}
+
+{% block content_title%}
+
+  
+  <br>
+  <br>
+  <br>
+    {{q}}
+  <br>
+  <br>
+  <br>
+  
+  
+
+{% endblock %}
+
+{% block content%}
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+
+
+<div class="row" style="margin-top:20px; margin-left:20px">
+   <div class="col-8">
+       <h2>{{y.name}}</h2>
+       <p>{{y.address}}</p>
+       <br>
+      <table class="table table-hover table-dark">
+         <thead>
+            <tr>
+                <th scope="col">A+ve</th>
+               <th scope="col">B+ve</th>
+               <th scope="col">AB+ve</th>
+               <th scope="col">O+ve</th>
+               <th scope="col">A-ve</th>
+               <th scope="col">B-ve</th>
+               <th scope="col">AB-ve</th>
+               <th scope="col">O-ve</th>
+            </tr>
+         </thead>
+         <tbody>
+            
+            
+            <tr>
+               <td>{{b.A_positive  }}</td>
+               <td>{{ b.B_positive }}</td>
+               <td>{{ b.AB_positive }}</td>
+               <td>{{ b.O_positive }}</td>
+               <td>{{ b.A_negative }}</td>
+               <td>{{ b.B_negative }}</td>
+               <td>{{ b.AB_negative }}</td>
+               <td>{{ b.O_negative }}</td>
+
+
+            </tr>
+
+            <tr>
+              <td>
+                  <button class="btn btn-outline btn-info" data-toggle="modal" data-target="#Modal-MoreInfo">-</button>
+                  <br>
+                  <br>
+         
+                  <button class="btn btn-outline btn-success" data-toggle="modal" data-target="#Modal-PurchaseConfirm">+</button>
+               </td>
+
+               <td>
+                 <button class="btn btn-outline btn-info" data-toggle="modal" data-target="#Modal-MoreInfo">-</button>
+                  <br>
+                  <br>
+         
+                  <button class="btn btn-outline btn-success" data-toggle="modal" data-target="#Modal-PurchaseConfirm">+</button>
+               </td>
+
+               <td>
+                 <button class="btn btn-outline btn-info" data-toggle="modal" data-target="#Modal-MoreInfo">-</button>
+                  <br>
+                  <br>
+         
+                  <button class="btn btn-outline btn-success" data-toggle="modal" data-target="#Modal-PurchaseConfirm">+</button>
+               </td>
+
+               <td>
+                 <button class="btn btn-outline btn-info" data-toggle="modal" data-target="#Modal-MoreInfo">-</button>
+                  <br>
+                  <br>
+         
+                  <button class="btn btn-outline btn-success" data-toggle="modal" data-target="#Modal-PurchaseConfirm">+</button>
+               </td>
+
+               <td>
+                 <button class="btn btn-outline btn-info" data-toggle="modal" data-target="#Modal-MoreInfo">-</button>
+                  <br>
+                  <br>
+         
+                  <button class="btn btn-outline btn-success" data-toggle="modal" data-target="#Modal-PurchaseConfirm">+</button>
+               </td>
+
+               <td>
+                 <button class="btn btn-outline btn-info" data-toggle="modal" data-target="#Modal-MoreInfo">-</button>
+                  <br>
+                  <br>
+         
+                  <button class="btn btn-outline btn-success" data-toggle="modal" data-target="#Modal-PurchaseConfirm">+</button>
+               </td>
+
+               <td>
+                 <button class="btn btn-outline btn-info" data-toggle="modal" data-target="#Modal-MoreInfo">-</button>
+                  <br>
+                  <br>
+         
+                  <button class="btn btn-outline btn-success" data-toggle="modal" data-target="#Modal-PurchaseConfirm">+</button>
+               </td>
+
+               <td>
+                 <button class="btn btn-outline btn-info" data-toggle="modal" data-target="#Modal-MoreInfo">-</button>
+                  <br>
+                  <br>
+         
+                  <button class="btn btn-outline btn-success" data-toggle="modal" data-target="#Modal-PurchaseConfirm">+</button>
+               </td>
+
+               
+               
+
+
+            </tr>
+            
+         </tbody>
+      </table>
+   </div>
+  <!--  <div class="col-4">
+        <h2>Owned Items</h2>
+        <p>Click on sell item to put an item back on the Market</p>
+        <br>
+        <div class="row">
+           {% for owned_item in owned_items %}
+           {% include 'includes/owned_items_modals.html' %}
+             <div class="col-md-6">
+                 <div style="margin-bottom: 5px" class="card text-center bg-dark">
+                      <div class="card-body">
+                          <h5 class="card-title">{{ owned_item.name }}</h5>
+                          <button type="button" class="btn btn-outline-danger" style="margin-bottom: 5px"
+                                  data-toggle="modal" data-target="#Modal-SellingConfirm-{{ owned_item.id }}">
+                              Sell this Item
+                          </button>
+                          <p class="card-text"><strong>
+                              This item costs {{ owned_item.price }}$
+                          </strong></p>
+                      </div>
+                  </div>
+             </div>
+           {% endfor %}
+        </div>
+        
+   </div> -->
+</div>
+
+{% endblock %}

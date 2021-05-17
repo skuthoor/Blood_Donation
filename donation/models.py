@@ -45,7 +45,7 @@ class govt_pvt(db.Model):
     govt_pvt = db.Column(db.String())
     govt_pvt_id = db.relationship('blood_bank', backref='Govt_Pvt', lazy=True)
 
-class blood_bank(db.Model):
+class blood_bank(db.Model, UserMixin):
     id = db.Column(db.Integer(), primary_key= True)
     name = db.Column(db.String())
     address = db.Column(db.String())
@@ -55,7 +55,7 @@ class blood_bank(db.Model):
     blood_bank_id = db.relationship('blood', backref='Blood', lazy=True)
     #name_id = db.relationship('userbank', backref='Namebloodbank', lazy=True)
 
-class blood(db.Model):
+class blood(db.Model, UserMixin):
     id = db.Column(db.Integer(), primary_key= True)
     blood_bank_id = db.Column(db.Integer(), db.ForeignKey('blood_bank.id'))
     A_positive = db.Column(db.Integer()) 

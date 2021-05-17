@@ -3,6 +3,9 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt 
 from flask_login import LoginManager
 
+global index 
+index = 0
+
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///donation.db'
 app.config['SECRET_KEY']= '9d47ad7092661e50d62333f0'

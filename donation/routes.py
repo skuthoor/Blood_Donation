@@ -1,9 +1,12 @@
-from donation import app
+from donation import app, index
 from flask import render_template, url_for ,redirect,url_for,flash, request, jsonify, json
-from donation.models import user, category, district, govt_pvt, blood_bank, userbank, doctor
+from donation.models import user, category, district, govt_pvt, blood_bank, userbank, doctor, blood
 from donation.forms import registerform , loginform, Blood_bank, registerbankform, registerdoctorform, loginbankform, logindoctorform
 from donation import db
 from flask_login import login_user, logout_user,login_required, current_user
+
+
+index = str()
 
 
 
@@ -57,10 +60,11 @@ def register_doctor_page():
 
 @app.route('/register/bank', methods=['GET','POST'])
 def register_bank_page():
+
 	form = registerbankform()
 	form.district.choices = [(district.id,district.district) for district in district.query.all()]
 	if form.validate_on_submit():
-
+		x = form.name.data
 		user_to_create = userbank(district_id=form.district.data, name_id=form.name.data, password=form.password1.data )
 		db.session.add(user_to_create)
 		db.session.commit()
@@ -132,11 +136,24 @@ def bank_login_page():
 	form.district.choices = [(district.id,district.district) for district in district.query.all()]
 
 	if form.validate_on_submit():
+		
+
 		attempted_user = userbank.query.filter_by(name_id=form.name.data).first()
+
 		if attempted_user and attempted_user.check_password_correction(attempted_password=form.password.data):
 			login_user(attempted_user)
 			flash(f'Sucess! You are logged in as: {attempted_user.name_id}',category = 'success')
-			return redirect(url_for('home_page'))
+			
+			global index
+			
+			index = attempted_user.name_id
+
+
+			
+			# return index
+
+			return redirect(url_for('official_blood_bank'))
+			
 		else:
 			flash('Username or Password is incorrect! Please try again', category= 'danger')
 
@@ -171,7 +188,9 @@ def blood_bank_page():
 	#print(form.district.data) 
 	if form.validate_on_submit():
 
-		return redirect(url_for('home_page'))
+
+
+		return redirect(url_for('official_blood_bank'))
 	if form.errors !={}:
 		for err_msg in form.errors.values():
 			flash(f'There was an error in creating the user:{err_msg}',category='danger')
@@ -192,3 +211,16 @@ def bloodbank(get_district):
 		districtArray.append(districtobj)
 
 	return jsonify({'bb' : districtArray})
+
+
+@app.route('/blood_bank/blood_bank', methods=['GET'])
+def official_blood_bank():
+	
+	x = index
+	x = int(x)
+	database = blood_bank.query.filter_by(id= x).first()
+	y = database
+	b = blood.query.filter_by(id=x).first()
+	q = b.A_positive 
+
+	return render_template('official_blood_bank.html', y=y, x=x,b=b, q=q)
