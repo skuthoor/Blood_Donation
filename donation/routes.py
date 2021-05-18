@@ -146,7 +146,7 @@ def bank_login_page():
 			
 			global index
 			
-			index = attempted_user.name_id
+			index = int(attempted_user.name_id)
 
 
 			
@@ -186,11 +186,19 @@ def blood_bank_page():
 	form = Blood_bank()
 	form.district.choices = [(district.id,district.district) for district in district.query.all()]
 	#print(form.district.data) 
+	
+
 	if form.validate_on_submit():
+		detailbk = blood_bank.query.filter_by(id=form.name.data).first()
+		#dst = district.query.filter_by(id=form.district.data).first()
 
+		global dt
+		global bk
+			
+		bk = int(detailbk.id)
+		dt = int(form.district.data)
 
-
-		return redirect(url_for('official_blood_bank'))
+		return redirect(url_for('detail_blood_bank'))
 	if form.errors !={}:
 		for err_msg in form.errors.values():
 			flash(f'There was an error in creating the user:{err_msg}',category='danger')
@@ -213,14 +221,33 @@ def bloodbank(get_district):
 	return jsonify({'bb' : districtArray})
 
 
-@app.route('/blood_bank/blood_bank', methods=['GET'])
+@app.route('/official_blood_bank', methods=['GET'])
 def official_blood_bank():
 	
 	x = index
-	x = int(x)
+	#x = int(x)
 	database = blood_bank.query.filter_by(id= x).first()
 	y = database
 	b = blood.query.filter_by(id=x).first()
 	q = b.A_positive 
 
 	return render_template('official_blood_bank.html', y=y, x=x,b=b, q=q)
+
+
+@app.route('/detail_of_bank', methods=['GET'])
+def detail_blood_bank():
+	
+	x = bk
+	
+	database = blood_bank.query.filter_by(id= x).first()
+	y = database
+	s = district.query.filter_by(id=dt).first()
+	print('/n')
+	print('/n')
+	print('sss')
+	print(dt)
+	print('/n')
+	print('/n')
+
+
+	return render_template('detail_blood_bank.html', y=y, s=s)

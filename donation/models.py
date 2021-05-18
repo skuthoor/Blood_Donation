@@ -30,17 +30,17 @@ class user(db.Model, UserMixin):
         return bcrypt.check_password_hash(self.password_hash, attempted_password)
 
 
-class category(db.Model):
+class category(db.Model, UserMixin):
     id = db.Column(db.Integer(), primary_key= True)
     category = db.Column(db.String())
     category_id = db.relationship('blood_bank', backref='Category', lazy=True)
 
-class district(db.Model):
+class district(db.Model, UserMixin):
     id = db.Column(db.Integer(), primary_key= True)
     district = db.Column(db.String())
     district_id = db.relationship('blood_bank', backref='District', lazy=True)
 
-class govt_pvt(db.Model):
+class govt_pvt(db.Model, UserMixin):
     id = db.Column(db.Integer(), primary_key= True)
     govt_pvt = db.Column(db.String())
     govt_pvt_id = db.relationship('blood_bank', backref='Govt_Pvt', lazy=True)

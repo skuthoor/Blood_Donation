@@ -20,7 +20,7 @@
 		<br>
 		<div class="container">
         	<form method="POST" class="form-signin" style="color:black">
-            	
+            	{{ form.hidden_tag() }}
             	<img class="mb-4" src="{{url_for('static',filename='assets/img/login_icon.jpeg')}}" alt="">
             	<h1 class="h3 mb-3 font-weight-normal">
                 Blood Bank

@@ -6,6 +6,12 @@ from flask_login import LoginManager
 global index 
 index = 0
 
+global bk
+bk = int(0) 
+
+global dt
+dt = int(0)
+
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///donation.db'
 app.config['SECRET_KEY']= '9d47ad7092661e50d62333f0'
