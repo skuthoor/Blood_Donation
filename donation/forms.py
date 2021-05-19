@@ -55,4 +55,10 @@ class logindoctorform(FlaskForm):
 	password = PasswordField(label='Password', validators=[DataRequired()])
 	submit = SubmitField(label='Log In')
 
+class finddoner(FlaskForm):
+	district = SelectField(label='District',choices=[])
+	blood_grp = SelectField(label='Blood Group',choices=['A+ve','B+ve','AB+ve','O+ve','A-ve','B-ve','AB-ve','O-ve'])
+	submit = SubmitField(label='Send Notification')
+
+
 

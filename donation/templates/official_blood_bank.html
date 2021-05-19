@@ -12,7 +12,7 @@
   <br>
   <br>
   <br>
-    {{q}}
+    <!-- {{q}} -->
   <br>
   <br>
   <br>
@@ -28,6 +28,19 @@
   <br>
   <br>
   <br>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type=text/javascript>
+        $(function() {
+          $('a#test').on('click', function(e) {
+            e.preventDefault()
+            $.getJSON('/background_process_test',
+                function(data) {
+              //do nothing
+            });
+            return false;
+          });
+        });
+</script>
 
 
 <div class="row" style="margin-top:20px; margin-left:20px">
@@ -66,7 +79,9 @@
 
             <tr>
               <td>
-                  <button class="btn btn-outline btn-info" data-toggle="modal" data-target="#Modal-MoreInfo">-</button>
+                    <form>
+                       <a href=# id=test><button class='btn btn-outline btn-success'>Test</button></a>
+                    </form>
                   <br>
                   <br>
 
@@ -137,6 +152,12 @@
             
          </tbody>
       </table>
+
+      <br>
+      <br>
+      <form>
+        <a href=# id=test><button class='btn btn-outline btn-success'>Test</button></a>
+      </form>
    </div>
   <!--  <div class="col-4">
         <h2>Owned Items</h2>

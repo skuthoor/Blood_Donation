@@ -1,10 +1,11 @@
 from donation import app, index
 from flask import render_template, url_for ,redirect,url_for,flash, request, jsonify, json
 from donation.models import user, category, district, govt_pvt, blood_bank, userbank, doctor, blood
-from donation.forms import registerform , loginform, Blood_bank, registerbankform, registerdoctorform, loginbankform, logindoctorform
+from donation.forms import registerform , loginform, Blood_bank, registerbankform, registerdoctorform, loginbankform, logindoctorform, finddoner
 from donation import db
 from flask_login import login_user, logout_user,login_required, current_user
-
+import sqlite3 as sql
+from donation.send_email import send
 
 index = str()
 
@@ -147,6 +148,7 @@ def bank_login_page():
 			global index
 			
 			index = int(attempted_user.name_id)
+			
 
 
 			
@@ -225,13 +227,23 @@ def bloodbank(get_district):
 def official_blood_bank():
 	
 	x = index
+	print('hi')
+	print('/n')
+	print('/n')
+
+	print(x)
+	print('/n')
+	print('/n')
+	global trans
+	trans = x
+
 	#x = int(x)
 	database = blood_bank.query.filter_by(id= x).first()
 	y = database
 	b = blood.query.filter_by(id=x).first()
-	q = b.A_positive 
+	# q = b.A_positive 
 
-	return render_template('official_blood_bank.html', y=y, x=x,b=b, q=q)
+	return render_template('official_blood_bank.html', y=y, x=x, b=b)
 
 
 @app.route('/detail_of_bank', methods=['GET'])
@@ -251,3 +263,71 @@ def detail_blood_bank():
 
 
 	return render_template('detail_blood_bank.html', y=y, s=s)
+
+
+
+
+#background process happening without any refreshing
+@app.route('/background_process_test')
+def background_process_test():
+		
+
+	# h = 5
+	# con = sql.connect('donation/donation.db')
+	# c = con.cursor()
+	# global trans
+	
+	print('/n')
+	print('/n')
+	email = current_user.email_address
+	print(email)
+	# print(x)
+	print('/n')
+	print('/n')
+	# c.execute('SELECT A_positive FROM blood WHERE id = ?',(x,))
+	# row = c.fetchone()
+	# if row != None :
+	# c.execute('UPDATE blood SET A_positive = A_positive + 1 WHERE id = ?',(x,))
+	# con.commit()
+
+
+	# if h ==5 :
+	return ("nothing")
+
+
+@app.route('/donor', methods=['GET','POST'])
+@login_required
+def donor():
+	form = finddoner()
+	form.district.choices = [(district.id,district.district) for district in district.query.all()]
+	 
+	
+
+	if form.validate_on_submit():
+		datas = user.query.filter_by(district=form.district.data , blood_grp=form.blood_grp.data).all()
+
+		emails =[]
+		number = current_user.mobile_no
+		number = str(number)
+
+		for data in datas:
+
+			emails.append(data.email_address)
+
+		send(emails,number)
+
+
+
+
+		
+
+		
+	if form.errors !={}:
+		for err_msg in form.errors.values():
+			flash(f'There was an error in creating the user:{err_msg}',category='danger')
+		
+	#form.name.choices = [(blood_bank.id,blood_bank.name) for blood_bank in blood_bank.query.all()]
+
+	return render_template('donor.html', form=form)
+
+

@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title%}
+  
+  Blood Bank
+
+{% endblock %}
+
+{% block content_title%}
+  
+  Blood Bank
+
+{% endblock %}
+
+
+{% block content%}
+	<body class="text-center">
+		<br>
+		<br>
+		<br>
+		<div class="container">
+        	<form method="POST" class="form-signin" style="color:black">
+            	{{ form.hidden_tag() }}
+            	<img class="mb-4" src="{{url_for('static',filename='assets/img/login_icon.jpeg')}}" alt="">
+            	<h1 class="h3 mb-3 font-weight-normal">
+                Blood Bank
+            	</h1>
+            	<br>
+
+            	{{ form.district.label()}}
+	            {{ form.district(class="form-control")}}
+
+                {{ form.blood_grp.label()}}
+                {{ form.blood_grp(class="form-control", placeholder="Blood Group")}}
+         
+
+            	<br>
+
+
+            	{{ form.submit(class="btn btn-lg btn-block btn-primary") }} 
+
+        	</form>
+
+    	</div>
+    </body>
+
+
+{% endblock %}
