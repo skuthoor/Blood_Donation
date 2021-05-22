@@ -61,4 +61,12 @@ class finddoner(FlaskForm):
 	submit = SubmitField(label='Send Notification')
 
 
+class change(FlaskForm):
+	blood_grp = SelectField(label='Blood Group',choices=['A+ve','B+ve','AB+ve','O+ve','A-ve','B-ve','AB-ve','O-ve'])
+	do = SelectField(label='Add/Sub', choices=['add','subtract'])
+	amount =   StringField(label='Unit Of Blood', validators=[DataRequired()])
+	submit = SubmitField(label='Confirm Change')
+
+
+
 

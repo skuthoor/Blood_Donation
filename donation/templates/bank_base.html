@@ -63,9 +63,9 @@
         <ul>
           <li><a class="nav-link scrollto" href="{{url_for('home_page')}}">Home</a></li>
           <li><a class="nav-link scrollto" href="">About</a></li>
-          <li><a class="nav-link scrollto" href="{{ url_for('blood_bank_page') }}">Blood Bank</a></li>
+          <li><a class="nav-link scrollto" href="#<!-- {{ url_for('blood_bank_page') }} -->">Blood Bank</a></li>
           <li><a class="nav-link scrollto" href="{{ url_for('donor') }}">Doner</a></li>
-          <li><a class="nav-link scrollto" href="#team">Recipient</a></li>
+          <!-- <li><a class="nav-link scrollto" href="#team">Recipient</a></li> -->
 
 
           
@@ -82,10 +82,10 @@
           {% else %}
             <ul class="navbar">
                 <li class="nav-item">
-                    <a class="nav-link scrollto" href="{{ url_for('login_page') }}">Login</a>
+                    <a class="nav-link scrollto" href="{{ url_for('bank_login_page') }}">Login</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link scrollto" href="{{ url_for('register_page') }}">Register</a>
+                    <a class="nav-link scrollto" href="{{ url_for('register_bank_page') }}">Register</a>
                 </li>
             </ul>
           {% endif %}

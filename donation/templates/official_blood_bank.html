@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "bank_base.html" %}
 
 {% block title%}
   
@@ -28,7 +28,7 @@
   <br>
   <br>
   <br>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+ <!--  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script type=text/javascript>
         $(function() {
           $('a#test').on('click', function(e) {
@@ -41,7 +41,7 @@
           });
         });
 </script>
-
+ -->
 
 <div class="row" style="margin-top:20px; margin-left:20px">
    <div class="col-8">
@@ -77,87 +77,39 @@
 
             </tr>
 
-            <tr>
-              <td>
-                    <form>
-                       <a href=# id=test><button class='btn btn-outline btn-success'>Test</button></a>
-                    </form>
-                  <br>
-                  <br>
 
-                  <button class="btn btn-outline btn-success" data-toggle="modal" data-target="#Modal-PurchaseConfirm">+</button>
-               </td>
-
-               <td>
-                 <button class="btn btn-outline btn-info" data-toggle="modal" data-target="#Modal-MoreInfo">-</button>
-                  <br>
-                  <br>
-         
-                  <button class="btn btn-outline btn-success" data-toggle="modal" data-target="#Modal-PurchaseConfirm">+</button>
-               </td>
-
-               <td>
-                 <button class="btn btn-outline btn-info" data-toggle="modal" data-target="#Modal-MoreInfo">-</button>
-                  <br>
-                  <br>
-         
-                  <button class="btn btn-outline btn-success" data-toggle="modal" data-target="#Modal-PurchaseConfirm">+</button>
-               </td>
-
-               <td>
-                 <button class="btn btn-outline btn-info" data-toggle="modal" data-target="#Modal-MoreInfo">-</button>
-                  <br>
-                  <br>
-         
-                  <button class="btn btn-outline btn-success" data-toggle="modal" data-target="#Modal-PurchaseConfirm">+</button>
-               </td>
-
-               <td>
-                 <button class="btn btn-outline btn-info" data-toggle="modal" data-target="#Modal-MoreInfo">-</button>
-                  <br>
-                  <br>
-         
-                  <button class="btn btn-outline btn-success" data-toggle="modal" data-target="#Modal-PurchaseConfirm">+</button>
-               </td>
-
-               <td>
-                 <button class="btn btn-outline btn-info" data-toggle="modal" data-target="#Modal-MoreInfo">-</button>
-                  <br>
-                  <br>
-         
-                  <button class="btn btn-outline btn-success" data-toggle="modal" data-target="#Modal-PurchaseConfirm">+</button>
-               </td>
-
-               <td>
-                 <button class="btn btn-outline btn-info" data-toggle="modal" data-target="#Modal-MoreInfo">-</button>
-                  <br>
-                  <br>
-         
-                  <button class="btn btn-outline btn-success" data-toggle="modal" data-target="#Modal-PurchaseConfirm">+</button>
-               </td>
-
-               <td>
-                 <button class="btn btn-outline btn-info" data-toggle="modal" data-target="#Modal-MoreInfo">-</button>
-                  <br>
-                  <br>
-         
-                  <button class="btn btn-outline btn-success" data-toggle="modal" data-target="#Modal-PurchaseConfirm">+</button>
-               </td>
-
-               
-               
-
-
-            </tr>
-            
          </tbody>
       </table>
+      <br>
+      <br>
 
-      <br>
-      <br>
-      <form>
-        <a href=# id=test><button class='btn btn-outline btn-success'>Test</button></a>
-      </form>
+      <div class="container">
+          <form method="POST" class="form-register" style="color:black">
+            {{form.hidden_tag()}}  <!-- protect from hackers -->
+            
+              <h1 class="h3 mb-3 font-weight-normal">
+                  Change Form
+              </h1>
+              <br>
+
+
+              {{ form.blood_grp.label()}}
+              {{ form.blood_grp(class="form-control", placeholder="Blood Group")}}
+
+
+              {{ form.do.label()}}
+              {{ form.do(class="form-control", placeholder="Add/Subtract")}}
+
+              {{ form.amount.label()}}
+              {{ form.amount(class="form-control", placeholder="amount")}}
+
+
+              {{ form.submit(class="btn btn-lg btn-block btn-primary") }}
+            </form>
+        </div>
+
+      
+ 
    </div>
   <!--  <div class="col-4">
         <h2>Owned Items</h2>

@@ -1,26 +1,30 @@
-from donation import app, index
+from donation import app
 from flask import render_template, url_for ,redirect,url_for,flash, request, jsonify, json
 from donation.models import user, category, district, govt_pvt, blood_bank, userbank, doctor, blood
-from donation.forms import registerform , loginform, Blood_bank, registerbankform, registerdoctorform, loginbankform, logindoctorform, finddoner
+from donation.forms import change, registerform , loginform, Blood_bank, registerbankform, registerdoctorform, loginbankform, logindoctorform, finddoner
 from donation import db
 from flask_login import login_user, logout_user,login_required, current_user
 import sqlite3 as sql
 from donation.send_email import send
 
-index = str()
-
-
-
-
 @app.route('/')
+def select_page():
+	return render_template('select_page.html')
+
+@app.route('/user/home')
 def home_page():
-	return render_template('home.html')
+	return render_template('user_home.html')
 
-@app.route('/register')
-def register_page():
-	
-	return render_template('register.html') 
+@app.route('/bank/home')
+def bank_home_page():
+	return render_template('user_home.html')
 
+@app.route('/doctor/home')
+def doctor_home_page():
+	return render_template('user_home.html')
+
+#aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+#registrtn
 
 @app.route('/register/user', methods=['GET','POST'])
 def register_user_page():
@@ -40,23 +44,6 @@ def register_user_page():
 		
 
 	return render_template('register_user.html',form=form)
-
-@app.route('/register/doctor', methods=['GET','POST'])
-def register_doctor_page():
-	form = registerdoctorform()
-	if form.validate_on_submit():
-		user_to_create = doctor(username=form.username.data, email_address=form.email_address.data, mobile_no=form.mobile_no.data, password=form.password1.data)
-		db.session.add(user_to_create)
-		db.session.commit()
-		login_user(user_to_create)
-		flash(f'Account created sucessfully! You are now logged in as: {user_to_create.username}')
-		return redirect(url_for('home_page'))
-	if form.errors != {}:
-		for err_msg in form.errors.values():
-			flash(f'There was an error in creating the user:{err_msg}',category='danger')
-
-	return render_template('register_doctor.html', form=form)
-
 
 
 @app.route('/register/bank', methods=['GET','POST'])
@@ -93,13 +80,25 @@ def bank(get_district):
 	return jsonify({'bb' : districtArray})
 
 
+@app.route('/register/doctor', methods=['GET','POST'])
+def register_doctor_page():
+	form = registerdoctorform()
+	if form.validate_on_submit():
+		user_to_create = doctor(username=form.username.data, email_address=form.email_address.data, mobile_no=form.mobile_no.data, password=form.password1.data)
+		db.session.add(user_to_create)
+		db.session.commit()
+		login_user(user_to_create)
+		flash(f'Account created sucessfully! You are now logged in as: {user_to_create.username}')
+		return redirect(url_for('home_page'))
+	if form.errors != {}:
+		for err_msg in form.errors.values():
+			flash(f'There was an error in creating the user:{err_msg}',category='danger')
 
-@app.route('/login')
-def login_page():
-	
-	return render_template('login.html') 
+	return render_template('register_doctor.html', form=form)
 
 
+#aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+#login
 
 @app.route('/login/user', methods=['GET','POST'])
 def user_login_page():
@@ -116,20 +115,6 @@ def user_login_page():
 
 	return render_template('login_user.html',form=form)
 
-@app.route('/login/doctor', methods=['GET','POST'])
-def doctor_login_page():
-	form = logindoctorform()
-	if form.validate_on_submit():
-		attempted_user = doctor.query.filter_by(email_address=form.email_address.data).first()
-		if attempted_user and attempted_user.check_password_correction(attempted_password=form.password.data):
-			login_user(attempted_user)
-			flash(f'Sucess! You are logged in as: {attempted_user.username}',category = 'success')
-			return redirect(url_for('home_page'))
-		else:
-			flash('Username or Password is incorrect! Please try again', category= 'danger')
-
-
-	return render_template('login_doctor.html',form=form)
 
 @app.route('/login/bank', methods=['GET','POST'])
 def bank_login_page():
@@ -145,14 +130,8 @@ def bank_login_page():
 			login_user(attempted_user)
 			flash(f'Sucess! You are logged in as: {attempted_user.name_id}',category = 'success')
 			
-			global index
-			
-			index = int(attempted_user.name_id)
 			
 
-
-			
-			# return index
 
 			return redirect(url_for('official_blood_bank'))
 			
@@ -161,6 +140,8 @@ def bank_login_page():
 
 
 	return render_template('login_bank.html',form=form)
+
+
 
 @app.route('/login/blood_bank/<get_district>')
 def logbank(get_district):
@@ -174,7 +155,24 @@ def logbank(get_district):
 
 	return jsonify({'bb' : districtArray})
 
+@app.route('/login/doctor', methods=['GET','POST'])
+def doctor_login_page():
+	form = logindoctorform()
+	if form.validate_on_submit():
+		attempted_user = doctor.query.filter_by(email_address=form.email_address.data).first()
+		if attempted_user and attempted_user.check_password_correction(attempted_password=form.password.data):
+			login_user(attempted_user)
+			flash(f'Sucess! You are logged in as: {attempted_user.username}',category = 'success')
+			return redirect(url_for('home_page'))
+		else:
+			flash('Username or Password is incorrect! Please try again', category= 'danger')
 
+
+	return render_template('login_doctor.html',form=form)
+
+
+#aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+#logout
 
 @app.route('/logout')
 def logout_page():
@@ -182,6 +180,8 @@ def logout_page():
 	flash('You have been logged out!',category='info')
 	return redirect(url_for('home_page'))
 
+#aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+# User blood bank Page 
 
 @app.route('/blood_bank_page', methods=['GET','POST'])
 def blood_bank_page():
@@ -222,30 +222,6 @@ def bloodbank(get_district):
 
 	return jsonify({'bb' : districtArray})
 
-
-@app.route('/official_blood_bank', methods=['GET'])
-def official_blood_bank():
-	
-	x = index
-	print('hi')
-	print('/n')
-	print('/n')
-
-	print(x)
-	print('/n')
-	print('/n')
-	global trans
-	trans = x
-
-	#x = int(x)
-	database = blood_bank.query.filter_by(id= x).first()
-	y = database
-	b = blood.query.filter_by(id=x).first()
-	# q = b.A_positive 
-
-	return render_template('official_blood_bank.html', y=y, x=x, b=b)
-
-
 @app.route('/detail_of_bank', methods=['GET'])
 def detail_blood_bank():
 	
@@ -264,36 +240,261 @@ def detail_blood_bank():
 
 	return render_template('detail_blood_bank.html', y=y, s=s)
 
+#aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+#blood bank official
+
+@app.route('/official_blood_bank', methods=['GET','POST'])
+def official_blood_bank():
+	form = change()
+
+	happy = current_user.id
+	hi = userbank.query.filter_by(id=happy).first()
+	x = hi.name_id
+
+	database = blood_bank.query.filter_by(id= x).first()
+	y = database
+
+	b = blood.query.filter_by(id=x).first()
+	
+
+	if form.validate_on_submit():
+		con = sql.connect('donation/donation.db')
+		c = con.cursor()
+
+		print('hello')
+		print('hello')
+
+		print('hello')
+
+		print('hello')
+		do = form.do.data
+		amount = form.amount.data
+
+		grp = form.blood_grp.data
+		if grp == 'A+ve':
+
+			# grp = 'A_positive'
+
+			if do == 'add':
+				c.execute('UPDATE blood SET A_positive = A_positive + ? WHERE id = ?',(amount,x,))
+				print(x)
+				con.commit()
+				# print('helloadd')
+
+			if do == 'subtract':
+				c.execute('UPDATE blood SET A_positive = A_positive - ? WHERE id = ?',(amount,x,))
+				
+				con.commit()
+				k = int(b.A_positive) - int(amount)
+				# print('happyday')
+				print(k)
+				if (k < 14):
+					number = y.name
+					districtid = y.district_id
+
+					datas = user.query.filter_by(district=districtid, blood_grp=grp).all()
+
+					emails =[]
+
+
+					for data in datas:
+
+						emails.append(data.email_address)
+
+						send(emails,number)
 
 
 
-#background process happening without any refreshing
-@app.route('/background_process_test')
-def background_process_test():
+		elif grp == 'B+ve':
+			if do == 'add':
+				c.execute('UPDATE blood SET B_positive = B_positive + ? WHERE id = ?',(amount,x,))
+				print(x)
+				con.commit()
+				# print('helloadd')
+
+			if do == 'subtract':
+				c.execute('UPDATE blood SET B_positive = B_positive - ? WHERE id = ?',(amount,x,))
+				
+				con.commit()
+				k = int(b.B_positive) - int(amount)
+				# print('happyday')
+				print(k)
+				if (k < 14):
+					number = y.name
+					districtid = y.district_id
+
+					datas = user.query.filter_by(district=districtid, blood_grp=grp).all()
+
+					emails =[]
+
+
+					for data in datas:
+
+						emails.append(data.email_address)
+
+						send(emails,number)
+				# print('helloadd')
+
+			# grp = 'B_positive'
+
+		elif grp == 'AB+ve':
+
+			if do == 'add':
+				c.execute('UPDATE blood SET AB_positive = AB_positive + ? WHERE id = ?',(amount,x,))
+				print(x)
+				con.commit()
+				# print('helloadd')
+
+			if do == 'subtract':
+				c.execute('UPDATE blood SET AB_positive = AB_positive - ? WHERE id = ?',(amount,x,))
+				
+				con.commit()
+				k = int(b.AB_positive) - int(amount)
+				# print('happyday')
+				print(k)
+				if (k < 14):
+					number = y.name
+					districtid = y.district_id
+
+					datas = user.query.filter_by(district=districtid, blood_grp=grp).all()
+
+					emails =[]
+
+
+					for data in datas:
+
+						emails.append(data.email_address)
+
+						send(emails,number)
+
+		elif grp == 'O+ve':
+
+			if do == 'add':
+				c.execute('UPDATE blood SET O_positive = O_positive + ? WHERE id = ?',(amount,x,))
+				print(x)
+				con.commit()
+
+
+				# print('helloadd')
+
+			if do == 'subtract':
+				c.execute('UPDATE blood SET O_positive = O_positive - ? WHERE id = ?',(amount,x,))
+				
+				con.commit()
+				k = int(b.O_positive) - int(amount)
+				# print('happyday')
+				print(k)
+				if (k < 14):
+					number = y.name
+					districtid = y.district_id
+
+					datas = user.query.filter_by(district=districtid, blood_grp=grp).all()
+
+					emails =[]
+
+
+					for data in datas:
+
+						emails.append(data.email_address)
+
+						send(emails,number)
+
+# NEGATIVE
+		elif grp == 'A-ve':
+
+			# grp = 'A_negative'
+
+			if do == 'add':
+				c.execute('UPDATE blood SET A_negative = A_negative + ? WHERE id = ?',(amount,x,))
+				print(x)
+				con.commit()
+				# print('helloadd')
+
+			if do == 'subtract':
+				c.execute('UPDATE blood SET A_negative = A_negative - ? WHERE id = ?',(amount,x,))
+				
+				con.commit()
+				# print('helloadd')
+
+
+		elif grp == 'B-ve':
+			if do == 'add':
+				c.execute('UPDATE blood SET B_negative = B_negative + ? WHERE id = ?',(amount,x,))
+				print(x)
+				con.commit()
+				# print('helloadd')
+
+			if do == 'subtract':
+				c.execute('UPDATE blood SET B_negative = B_negative - ? WHERE id = ?',(amount,x,))
+				
+				con.commit()
+				# print('helloadd')
+
+			# grp = 'B_negative'
+
+		elif grp == 'AB-ve':
+
+			if do == 'add':
+				c.execute('UPDATE blood SET AB_negative = AB_negative + ? WHERE id = ?',(amount,x,))
+				print(x)
+				con.commit()
+				# print('helloadd')
+
+			if do == 'subtract':
+				c.execute('UPDATE blood SET AB_negative = AB_negative - ? WHERE id = ?',(amount,x,))
+				
+				con.commit()
+
+		elif grp == 'O-ve':
+
+			if do == 'add':
+				c.execute('UPDATE blood SET O_negative = O_negative + ? WHERE id = ?',(amount,x,))
+				print(x)
+				con.commit()
+				# print('helloadd')
+
+			if do == 'subtract':
+				c.execute('UPDATE blood SET O_negative = O_negative - ? WHERE id = ?',(amount,x,))
+				
+				con.commit()
+
+
+
+		# elif grp == 'A-ve':
+		# 	grp = 'A_negative'
+
+		# elif grp == 'B-ve':
+		# 	grp = 'B_negative'
+
+		# elif grp == 'AB-ve':
+		# 	grp = 'AB_negative'
+
+		# elif grp == 'O-ve':
+		# 	grp = 'O_negative'
+
+
+
+
+
+
+		# print(grp)
+		# print(do)
+		# print(amount)
+		#flash('sucess',category=sucess)
+		return redirect(url_for('official_blood_bank'))
+
+	if form.errors !={}:
+		for err_msg in form.errors.values():
+			flash(f'There was an error in creating the user:{err_msg}',category='danger')
 		
 
-	# h = 5
-	# con = sql.connect('donation/donation.db')
-	# c = con.cursor()
-	# global trans
-	
-	print('/n')
-	print('/n')
-	email = current_user.email_address
-	print(email)
-	# print(x)
-	print('/n')
-	print('/n')
-	# c.execute('SELECT A_positive FROM blood WHERE id = ?',(x,))
-	# row = c.fetchone()
-	# if row != None :
-	# c.execute('UPDATE blood SET A_positive = A_positive + 1 WHERE id = ?',(x,))
-	# con.commit()
+	return render_template('official_blood_bank.html', y=y, b=b,form=form)
 
 
-	# if h ==5 :
-	return ("nothing")
 
+
+#aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+#donor finder
 
 @app.route('/donor', methods=['GET','POST'])
 @login_required
@@ -304,6 +505,12 @@ def donor():
 	
 
 	if form.validate_on_submit():
+		# print('hello')
+		# print('hello')
+
+		# print('hello')
+
+		# print('hello')
 		datas = user.query.filter_by(district=form.district.data , blood_grp=form.blood_grp.data).all()
 
 		emails =[]
@@ -315,13 +522,6 @@ def donor():
 			emails.append(data.email_address)
 
 		send(emails,number)
-
-
-
-
-		
-
-		
 	if form.errors !={}:
 		for err_msg in form.errors.values():
 			flash(f'There was an error in creating the user:{err_msg}',category='danger')
