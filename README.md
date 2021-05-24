@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Blood Donation
   It is a web application based blood monitoring system.
 
@@ -67,3 +68,16 @@ cd Blood_donation
 ---
 
 ### Images
+=======
+![](screenshots/page1.png)
+
+![](screenshots/homepage.png)
+
+![](screenshots/userlogin.png)
+
+
+![](screenshots/user_registration.jpeg)
+
+![](screenshots/BloodBank_login.jpeg)
+
+![](screenshots/blood_bank.png)
