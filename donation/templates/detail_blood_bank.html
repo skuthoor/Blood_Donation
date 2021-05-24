@@ -28,12 +28,61 @@
   <br>
   <br>
 
- <div class="row" style="margin-top:20px; margin-left:20px">
+<!--  <div class="row" style="margin-top:20px; margin-left:20px">
       
        <h2>{{y.name}}</h2>
        <p>{{y.address}}</p>
        <p>{{s.district}}</p>
-  </div>
+  </div> -->
+
+  <div class="row" style="margin-top:20px; margin-left:20px">
+ 
+  
+       <h2>{{y.name}}</h2>
+
+         <div class="col-6">
+       <!-- <p>{{y.address}}</p> -->
+       <br>
+      <table class="table table-hover table-dark">
+         <thead>
+
+         </thead>
+         <tbody>
+            
+            
+            <tr>
+               <th scope="col">Address</th>
+               <th scope="col">:</th>
+
+               <th scope="col">{{y.address}}</th>
+
+             </tr>
+
+              <tr>
+               <th scope="col">District</th>
+               <th scope="col">:</th>
+
+               <th scope="col">{{s.district}}</th>
+
+             </tr>
+
+             <tr>
+               <th scope="col">Govt/Pvt </th>
+               <th scope="col">:</th>
+
+               <th scope="col">{{y.govt_pvt_id}}</th>
+
+             </tr>
+
+             <tr>
+               <th scope="col">Category</th>
+               <th scope="col">:</th>
+
+               <th scope="col">{{y.category_id}}</th>
+
+             </tr>
+
+
 
 
 {% endblock %}

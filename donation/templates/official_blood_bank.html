@@ -28,22 +28,10 @@
   <br>
   <br>
   <br>
- <!--  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script type=text/javascript>
-        $(function() {
-          $('a#test').on('click', function(e) {
-            e.preventDefault()
-            $.getJSON('/background_process_test',
-                function(data) {
-              //do nothing
-            });
-            return false;
-          });
-        });
-</script>
- -->
+
 
 <div class="row" style="margin-top:20px; margin-left:20px">
+ 
    <div class="col-8">
        <h2>{{y.name}}</h2>
        <p>{{y.address}}</p>
@@ -65,14 +53,14 @@
             
             
             <tr>
-               <td>{{b.A_positive  }}</td>
-               <td>{{ b.B_positive }}</td>
-               <td>{{ b.AB_positive }}</td>
-               <td>{{ b.O_positive }}</td>
-               <td>{{ b.A_negative }}</td>
-               <td>{{ b.B_negative }}</td>
-               <td>{{ b.AB_negative }}</td>
-               <td>{{ b.O_negative }}</td>
+               <td>{{b.A_positive  }} Unit</td>
+               <td>{{ b.B_positive }} Unit</td>
+               <td>{{ b.AB_positive }} Unit</td>
+               <td>{{ b.O_positive }} Unit</td>
+               <td>{{ b.A_negative }} Unit</td>
+               <td>{{ b.B_negative }} Unit</td>
+               <td>{{ b.AB_negative }} Unit</td>
+               <td>{{ b.O_negative }} Unit</td>
 
 
             </tr>
@@ -107,35 +95,15 @@
               {{ form.submit(class="btn btn-lg btn-block btn-primary") }}
             </form>
         </div>
+    </div>
+        
+  </div>
+</div>
 
       
  
    </div>
-  <!--  <div class="col-4">
-        <h2>Owned Items</h2>
-        <p>Click on sell item to put an item back on the Market</p>
-        <br>
-        <div class="row">
-           {% for owned_item in owned_items %}
-           {% include 'includes/owned_items_modals.html' %}
-             <div class="col-md-6">
-                 <div style="margin-bottom: 5px" class="card text-center bg-dark">
-                      <div class="card-body">
-                          <h5 class="card-title">{{ owned_item.name }}</h5>
-                          <button type="button" class="btn btn-outline-danger" style="margin-bottom: 5px"
-                                  data-toggle="modal" data-target="#Modal-SellingConfirm-{{ owned_item.id }}">
-                              Sell this Item
-                          </button>
-                          <p class="card-text"><strong>
-                              This item costs {{ owned_item.price }}$
-                          </strong></p>
-                      </div>
-                  </div>
-             </div>
-           {% endfor %}
-        </div>
-        
-   </div> -->
+
 </div>
 
 {% endblock %}
